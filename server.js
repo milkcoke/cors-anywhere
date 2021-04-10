@@ -20,7 +20,7 @@ function parseEnvList(env) {
 // Set up rate-limiting to avoid abuse of the public CORS Anywhere server.
 // var checkRateLimit = require('./lib/rate-limit')(process.env.CORSANYWHERE_RATELIMIT);
 // 1분에 10000회.  sarang.org 및 서브도메인들은 무제한
-var checkRateLimit = require('./lib/rate-limit')("10000 1 /(.*\.)?sarang\.org/");
+var checkRateLimit = require('./lib/rate-limit')("600000 1 /(.*\.)?sarang\.org/");
 
 var cors_proxy = require('./lib/cors-anywhere');
 cors_proxy.createServer({
