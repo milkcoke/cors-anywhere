@@ -9,7 +9,7 @@ var port = process.env.PORT || 8080;
 // use originWhitelist instead.
 var originBlacklist = parseEnvList(process.env.CORSANYWHERE_BLACKLIST);
 // var originWhitelist = parseEnvList(process.env.CORSANYWHERE_WHITELIST);
-var originWhitelist = ["http://sarang.org","https://sarang.org","http://www.sarang.org","https://www.sarang.org"];
+var originWhitelist = ["http://sarang.org","https://sarang.org","http://www.sarang.org","https://www.sarang.org","http://localhost:3000","http://localhost:5000"];
 function parseEnvList(env) {
   if (!env) {
     return [];
