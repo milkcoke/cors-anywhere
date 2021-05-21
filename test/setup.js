@@ -1,4 +1,4 @@
-var nock = require('nock');
+const nock = require('nock');
 if (parseInt(process.versions.node, 10) >= 8) {
   // See DEP0066 at https://nodejs.org/api/deprecations.html.
   // _headers and _headerNames have been removed from Node v8, which causes
@@ -7,7 +7,7 @@ if (parseInt(process.versions.node, 10) >= 8) {
   // for the equivalent logic without proxies.
   Object.defineProperty(require('http').ClientRequest.prototype, '_headers', {
     get: function() {
-      var request = this;
+      const request = this;
       // eslint-disable-next-line no-undef
       return new Proxy(request.getHeaders(), {
         set: function(target, property, value) {
@@ -29,8 +29,8 @@ function echoheaders(origin) {
     .persist()
     .get('/echoheaders')
     .reply(function() {
-      var headers = this.req.headers;
-      var excluded_headers = [
+      const headers = this.req.headers;
+      const excluded_headers = [
         'accept-encoding',
         'user-agent',
         'connection',
@@ -42,7 +42,7 @@ function echoheaders(origin) {
         excluded_headers.push('x-forwarded-port');
         excluded_headers.push('x-forwarded-proto');
       }
-      var response = {};
+      const response = {};
       Object.keys(headers).forEach(function(name) {
         if (excluded_headers.indexOf(name) === -1) {
           response[name] = headers[name];

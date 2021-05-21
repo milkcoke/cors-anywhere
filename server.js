@@ -1,28 +1,30 @@
 // Listen on a specific host via the HOST environment variable
-var host = process.env.HOST || '0.0.0.0';
+const host = process.env.HOST || '0.0.0.0';
 // Listen on a specific port via the PORT environment variable
-var port = process.env.PORT || 8080;
+const port = process.env.PORT || 8080;
 
 // Grab the blacklist from the command-line so that we can update the blacklist without deploying
 // again. CORS Anywhere is open by design, and this blacklist is not used, except for countering
 // immediate abuse (e.g. denial of service). If you want to block all origins except for some,
 // use originWhitelist instead.
-var originBlacklist = parseEnvList(process.env.CORSANYWHERE_BLACKLIST);
-var originWhitelist = parseEnvList(process.env.CORSANYWHERE_WHITELIST);
-//var originWhitelist = ["http://sarang.org","https://sarang.org","http://www.sarang.org","https://www.sarang.org","http://localhost:3000","http://localhost:5000","http://192.168.10.104:3000","http://192.168.10.104:5000"];
+const originBlacklist = parseEnvList(process.env.CORSANYWHERE_BLACKLIST);
+const originWhitelist = parseEnvList(process.env.CORSANYWHERE_WHITELIST);
+
+//const originWhitelist = ["http://sarang.org","https://sarang.org","http://www.sarang.org","https://www.sarang.org","http://localhost:3000","http://localhost:5000","http://192.168.10.104:3000","http://192.168.10.104:5000"];
 function parseEnvList(env) {
   if (!env) {
     return [];
+  } else {
+    return env.split(',');
   }
-  return env.split(',');
 }
 
 // Set up rate-limiting to avoid abuse of the public CORS Anywhere server.
 // var checkRateLimit = require('./lib/rate-limit')(process.env.CORSANYWHERE_RATELIMIT);
 // 1분에 10000회.  sarang.org 및 서브도메인들은 무제한
-var checkRateLimit = require('./lib/rate-limit')("600000 1 /(.*\.)?sarang\.org/");
+const checkRateLimit = require('./lib/rate-limit')('600000 1 /(.*\.)?sarang\.org/');
 
-var cors_proxy = require('./lib/cors-anywhere');
+const cors_proxy = require('./lib/cors-anywhere');
 cors_proxy.createServer({
   originBlacklist: originBlacklist,
   originWhitelist: originWhitelist,
@@ -46,7 +48,7 @@ cors_proxy.createServer({
   ],
   redirectSameOrigin: true,
   // If set, an Access-Control-Max-Age request header with this value (in seconds) will be added.
-  corsMaxAge: 60*60*24*30,
+  corsMaxAge: 60 * 60 * 24 * 30,
   httpProxyOptions: {
     // Do not add X-Forwarded-For, etc. headers, because Heroku already adds it.
     xfwd: false,

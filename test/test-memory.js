@@ -1,16 +1,16 @@
 /* eslint-env mocha */
 // Run this specific test using:
 // npm test -- -f memory
-var http = require('http');
-var path = require('path');
-var url = require('url');
-var fork = require('child_process').fork;
+const http = require('http');
+const path = require('path');
+const url = require('url');
+const fork = require('child_process').fork;
 
 describe('memory usage', function() {
-  var cors_api_url;
+  let cors_api_url;
 
-  var server;
-  var cors_anywhere_child;
+  let server;
+  let cors_anywhere_child;
   before(function(done) {
     server = http.createServer(function(req, res) {
       res.writeHead(200);
@@ -27,13 +27,13 @@ describe('memory usage', function() {
   });
 
   beforeEach(function(done) {
-    var cors_module_path = path.join(__dirname, 'child');
-    var args = [];
+    const cors_module_path = path.join(__dirname, 'child');
+    const args = [];
     // Uncomment this if you want to compare the performance of CORS Anywhere
     // with the standard no-op http module.
     // args.push('use-http-instead-of-cors-anywhere');
-    var nodeOptionsArgs = ['--expose-gc'];
-    var nodeMajorV = parseInt(process.versions.node, 10);
+    const nodeOptionsArgs = ['--expose-gc'];
+    const nodeMajorV = parseInt(process.versions.node, 10);
     // Node 11.3.0+, 10.14.0+, 8.14.0+, 6.15.0+ restrict header sizes
     // (CVE-2018-12121), and need to be passed the --max-http-header-size flag
     // to not reject large headers.
@@ -66,8 +66,8 @@ describe('memory usage', function() {
    *   Upon failure, called with the error as parameter.
    */
   function performNRequests(n, requestSize, memMax, done) {
-    var remaining = n;
-    var request = url.parse(
+    let remaining = n;
+    const request = url.parse(
         cors_api_url + 'http://127.0.0.1:' + server.address().port);
     request.agent = false; // Force Connection: Close
     request.headers = {

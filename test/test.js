@@ -1,21 +1,21 @@
 /* eslint-env mocha */
 require('./setup');
 
-var createServer = require('../').createServer;
-var request = require('supertest');
-var path = require('path');
-var http = require('http');
-var https = require('https');
-var fs = require('fs');
-var assert = require('assert');
+const createServer = require('../').createServer;
+const request = require('supertest');
+const path = require('path');
+const http = require('http');
+const https = require('https');
+const fs = require('fs');
+const assert = require('assert');
 
-var helpTextPath = path.join(__dirname, '../lib/help.txt');
-var helpText = fs.readFileSync(helpTextPath, {encoding: 'utf8'});
+const helpTextPath = path.join(__dirname, '../lib/help.txt');
+const helpText = fs.readFileSync(helpTextPath, {encoding: 'utf8'});
 
 request.Test.prototype.expectJSON = function(json, done) {
   this.expect(function(res) {
     // Assume that the response can be parsed as JSON (otherwise it throws).
-    var actual = JSON.parse(res.text);
+    const actual = JSON.parse(res.text);
     assert.deepEqual(actual, json);
   });
   return done ? this.end(done) : this;
@@ -30,8 +30,9 @@ request.Test.prototype.expectNoHeader = function(header, done) {
   return done ? this.end(done) : this;
 };
 
-var cors_anywhere;
-var cors_anywhere_port;
+let cors_anywhere;
+let cors_anywhere_port;
+
 function stopServer(done) {
   cors_anywhere.close(function() {
     done();

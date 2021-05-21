@@ -64,9 +64,10 @@ textarea {
 </div>
 
 <script>
-  var cors_api_url = 'https://cors-anywhere.herokuapp.com/';
+  const cors_api_url = 'https://cors-anywhere.herokuapp.com/';
+
   function doCORSRequest(options, printResult) {
-    var x = new XMLHttpRequest();
+    const x = new XMLHttpRequest();
     x.open(options.method, cors_api_url + options.url);
     x.onload = x.onerror = function() {
       printResult(
@@ -83,9 +84,9 @@ textarea {
 
   // Bind event
   (function() {
-    var urlField = document.getElementById('url');
-    var dataField = document.getElementById('data');
-    var outputField = document.getElementById('output');
+    const urlField = document.getElementById('url');
+    const dataField = document.getElementById('data');
+    const outputField = document.getElementById('output');
     document.getElementById('get').onclick =
     document.getElementById('post').onclick = function(e) {
       e.preventDefault();
